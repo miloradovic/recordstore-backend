@@ -29,6 +29,7 @@ gem "jwt_sessions"
 # ActiveAdmin setup
 gem 'devise'
 gem 'activeadmin'
+gem 'active_admin_theme'
 
 gem "chartkick"
 gem 'groupdate'
