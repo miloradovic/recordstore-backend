@@ -1,4 +1,4 @@
-class SignupController < ApplicationController
+class SignupController < ApiController
   def create
     user = User.new(user_params)
 

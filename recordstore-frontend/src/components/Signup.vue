@@ -56,7 +56,9 @@ export default {
       }
 
       localStorage.csrf = response.data.csrf
+      localStorage.userID = response.data.id
       localStorage.signedIn = true
+      this.$store.dispatch('setUserToLogin')
       this.error = ''
       this.$router.replace('/records')
     },

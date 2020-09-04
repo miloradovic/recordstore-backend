@@ -1,6 +1,6 @@
 module Api
   module V1
-    class RecordsController < ApplicationController
+    class RecordsController < ApiController
       before_action :authorize_access_request!
       before_action :set_record, only: [:show, :update, :destroy]
 

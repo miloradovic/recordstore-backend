@@ -1,4 +1,4 @@
-class HomeController < ApplicationController
+class HomeController < ApiController
   def index
     @artists = Artist.all
     render json: @artists
