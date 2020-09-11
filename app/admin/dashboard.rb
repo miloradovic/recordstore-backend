@@ -21,10 +21,10 @@ ActiveAdmin.register_page "Dashboard" do
       end
 
       column do
-        panel "Graph #1" do
+        panel "Graph #1 - Artists by number of records" do
           pie_chart Artist.joins(:records).group(:name).count(:title)
         end
-        panel "Graph #2" do
+        panel "Graph #2 - Created records per day" do
           line_chart Record.group_by_day(:created_at).count
         end
       end

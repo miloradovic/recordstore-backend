@@ -1,5 +1,5 @@
 ActiveAdmin.setup do |config|
-  config.register_javascript 'https://www.google.com/jsapi'
+  config.register_javascript "https://www.google.com/jsapi"
   # == Site Title
   #
   # Set the title that is displayed on the main layout
@@ -125,7 +125,7 @@ ActiveAdmin.setup do |config|
   # This allows your users to comment on any resource registered with Active Admin.
   #
   # You can completely disable comments:
-  # config.comments = false
+  config.comments = false
   #
   # You can change the name under which comments are registered:
   # config.comments_registration_name = 'AdminComment'
@@ -173,7 +173,7 @@ ActiveAdmin.setup do |config|
 
   # == Setting a Favicon
   #
-  config.favicon = '/assets/images/favicon.ico'
+  config.favicon = "/assets/images/favicon.ico"
 
   # == Meta Tags
   #
