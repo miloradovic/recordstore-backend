@@ -63,7 +63,7 @@ export default {
       this.$router.replace('/records')
     },
     signupFailed (error) {
-      this.error = (error.response && error.response.data && error.response.data.error) || 'Something wrong'
+      this.error = (error.response && error.response.data && error.response.data.error) || 'Email is already taken.'
       delete localStorage.csrf
       delete localStorage.signedIn
     },
