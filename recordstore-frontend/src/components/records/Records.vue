@@ -4,10 +4,10 @@
       <b-form-row>
         <b-col sm="4">
           <b-form action="" @submit.prevent="addRecord">
-            <b-form-input autofocus autocomplete="off" v-model="newRecord.title" placeholder="Type record title"></b-form-input>
-            <b-form-input autofocus autocomplete="off" v-model="newRecord.year" placeholder="Type a year record was released" class="mt-2"></b-form-input>
-            <b-form-select v-model="newRecord.artist" class="mt-2">
-              <b-form-select-option :value="null">Please select an artist</b-form-select-option>
+            <b-form-input autofocus autocomplete="off" required v-model.trim="newRecord.title" placeholder="Type record title"></b-form-input>
+            <b-form-input autocomplete="off" required v-model="newRecord.year" placeholder="Type a year record was released" class="mt-2" type="tel" v-mask="'####'"></b-form-input>
+            <b-form-select required v-model="newRecord.artist" class="mt-2">
+              <b-form-select-option disabled selected :value="null">Please select an artist</b-form-select-option>
               <b-form-select-option :value="artist.id" v-for="artist in artists" :key="artist.id">
                 {{ artist.name }}
               </b-form-select-option>
@@ -17,7 +17,7 @@
           <p class="pt-4">Don't see an artist? <router-link to="/artists" class="link-grey">Create one</router-link></p>
         </b-col>
       </b-form-row>
-      <div class="pt-2 text-danger" v-if="error">{{ error }}</div>
+      <div class="pt-2 text-danger" v-if="isError">{{ error }}</div>
     </b-jumbotron>
 
     <b-container class="mb-5">
@@ -38,9 +38,9 @@
           <div v-if="record == editedRecord">
             <b-form action="" @submit.prevent="updateRecord(record)" inline>
               <b-col>
-                <b-form-input class="input" v-model="record.title" style="width: 200px;"></b-form-input>
-                <b-form-input class="input" v-model="record.year" style="width: 200px;"></b-form-input>
-                <b-form-select id="artist_update" v-model="record.artist">
+                <b-form-input class="input" required v-model.trim="record.title" style="width: 200px;"></b-form-input>
+                <b-form-input class="input" required v-model="record.year" style="width: 200px;" type="tel" v-mask="'####'"></b-form-input>
+                <b-form-select id="artist_update" required v-model="record.artist">
                   <b-form-select-option :value="null">Select an artist</b-form-select-option>
                   <b-form-select-option :value="artist.id" v-for="artist in artists" :key="artist.id">
                     {{ artist.name }}
@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import {mask} from 'vue-the-mask'
+
 export default {
   name: 'Records',
   data () {
@@ -80,6 +82,12 @@ export default {
         .catch(error => this.setError(error, 'Something went wrong'))
     }
   },
+  computed: {
+    isError: function () {
+      return this.error !== ''
+    }
+  },
+  directives: {mask},
   methods: {
     setError (error, text) {
       this.error = (error.response && error.response.data && error.response.data.error) || text
@@ -101,6 +109,7 @@ export default {
         .then(response => {
           this.records.push(response.data)
           this.newRecord = {}
+          this.error = ''
         })
         .catch(error => this.setError(error, 'Cannot create record'))
     },

@@ -4,12 +4,13 @@
       <b-form-row>
         <b-col>
           <b-form action="" @submit.prevent="addArtist" inline>
-            <b-form-input autofocus autocomplete="off" v-model="newArtist.name" placeholder="Type an arist name" style="width: 200px;"></b-form-input>
+            <b-form-input autofocus autocomplete="off" required v-model.trim="newArtist.name" placeholder="Type an arist name" style="width: 200px;"></b-form-input>
             <b-button type="submit" variant="success" class="ml-2">Add Artist</b-button>
           </b-form>
+          <p class="pt-4">Added wanted artist? <router-link to="/records" class="link-grey">Add his records</router-link></p>
         </b-col>
       </b-form-row>
-      <div class="pt-2 text-danger" v-if="error">{{ error }}</div>
+      <div class="pt-2 text-danger" v-if="isError">{{ error }}</div>
     </b-jumbotron>
 
     <b-container class="mb-5">
@@ -27,7 +28,8 @@
           <div v-if="artist == editedArtist">
             <b-form action="" @submit.prevent="updateArtist(artist)" inline>
               <b-col>
-                  <b-form-input class="input" v-model="artist.name" style="width: 200px;"></b-form-input>
+                  <b-form-input class="input" required v-model="artist.name" style="width: 200px;"></b-form-input>
+                  <p class="pt-2 text-danger" v-if="isError">{{ error }}</p>
                   <b-button type="submit" value="Update" variant="success">Update</b-button>
               </b-col>
             </b-form>
@@ -44,7 +46,9 @@ export default {
   data () {
     return {
       artists: [],
-      newArtist: {},
+      newArtist: {
+        name: null
+      },
       error: '',
       editedArtist: ''
     }
@@ -58,6 +62,11 @@ export default {
         .catch(error => this.setError(error, 'Something went wrong'))
     }
   },
+  computed: {
+    isError: function () {
+      return this.error !== ''
+    }
+  },
   methods: {
     setError (error, text) {
       this.error = (error.response && error.response.data && error.response.data.error) || text
@@ -67,10 +76,12 @@ export default {
       if (!value) {
         return
       }
+
       this.$http.secured.post('/api/v1/artists/', { artist: { name: this.newArtist.name, user_id: parseInt(localStorage.getItem('userID')) } })
         .then(response => {
           this.artists.push(response.data)
           this.newArtist = {}
+          this.error = ''
         })
         .catch(error => this.setError(error, 'Cannot create artist'))
     },
