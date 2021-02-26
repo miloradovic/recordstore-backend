@@ -6,8 +6,8 @@
 Main reason for this app: Research purpose for Final papers submitted to FON University 
 
 ### Architecture of the application
-
-![Web application architecture](public\ArhitekturaAplikacije.png)
+  
+![Web application architecture](public/ArhitekturaAplikacije.png)
 
 To try out app yourself, you need to start Redis server before going with Rails.  
 Then using Terminal go inside *recordstore-backend* and type `rails s` to start Rails app.  
@@ -36,8 +36,8 @@ VueJS will work on port:8080
 ---
 ### Screenshot of the Vue Artists page
 
-![Screenshot of Vue page](public\Artists.png)
+![Screenshot of Vue page](public/Artists.png)
 
 ### Screenshot of the ActiveAdmin Home page
 
-![Screenshot of ActiveAdmin Home page](public\Admin-Dashboard.png)
+![Screenshot of ActiveAdmin Home page](public/Admin-Dashboard.png)
